@@ -1,4 +1,4 @@
-class Signal
+class Beacon
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Spacial::Document

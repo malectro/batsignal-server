@@ -5,6 +5,8 @@ BatsignalServer::Application.routes.draw do
   match "/auth/:provider/callback" => "sessions#create"
   match "/signout" => "sessions#destroy", :as => :signout
 
+  resources :beacons, only: [:index, :show, :create]
+
   namespace :admin do
     root to: 'admin#index'
   end
