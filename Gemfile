@@ -39,3 +39,6 @@ gem 'jquery-rails'
 
 gem "mongoid"
 gem "ejs", :group => :assets
+gem "figaro"
+gem "omniauth"
+gem "omniauth-twitter"

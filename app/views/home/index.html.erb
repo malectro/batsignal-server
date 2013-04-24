@@ -1,4 +1,10 @@
 <main>
   <!-- content -->
+  <%= flash[:notice] %>
+  <% unless current_user %>
+    <%= link_to "Log in With Twitter", "/auth/twitter" %>
+  <% else %>
+    Logged in as: <%= current_user.name %>
+  <% end %>
 </main>
 
