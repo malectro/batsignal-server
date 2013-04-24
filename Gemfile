@@ -38,6 +38,7 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem "mongoid"
+gem "mongoid_spacial"
 gem "ejs", :group => :assets
 gem "figaro"
 gem "omniauth"
