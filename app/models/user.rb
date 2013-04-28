@@ -5,7 +5,7 @@ class User
   API_KEY = ENV['TWITTER_API_KEY']
   API_SECRET = ENV['TWITTER_API_SECRET']
 
-  has_many :signals
+  has_many :beacons
 
   # omniauth fields
   field :provider, type: String

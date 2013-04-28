@@ -4,6 +4,8 @@ BatsignalServer::Application.routes.draw do
 
   match "/auth/:provider/callback" => "sessions#create"
   match "/signout" => "sessions#destroy", :as => :signout
+  match "/twitter_reverse_auth_token" => "sessions#twitter_reverse_auth_token"
+  match "/twitter_reverse_auth_2" => "sessions#twitter_reverse_auth_2"
 
   resources :beacons, only: [:index, :show, :create]
 

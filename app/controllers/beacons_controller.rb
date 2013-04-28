@@ -10,7 +10,7 @@ class BeaconsController < ApplicationController
   end
 
   def create
-    @beacon = Beacon.new(params[:signal])
+    @beacon = Beacon.new(params[:beacon])
 
     if @beacon.save
       render json: @beacon, status: :created, location: @beacon
