@@ -6,12 +6,22 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     user = User.where(provider: auth["provider"], uid: auth["uid"]).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
-    redirect_to root_url, flash[:notice] => "Signed in!"
+    respond_to do |format|
+      format.json { render json: current_user }
+      format.html { redirect_to root_url, flash[:notice] => "Signed in!" }
+    end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, flash[:notice] => "Signed out!"
+    respond_to do |format|
+      format.json { render json: current_user }
+      format.html { redirect_to root_url, flash[:notice] => "Signed out!" }
+    end
+  end
+
+  def current
+    render json: current_user
   end
 
   def twitter_reverse_auth_token
