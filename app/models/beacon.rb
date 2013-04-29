@@ -8,5 +8,14 @@ class Beacon
   field :geo, type: Array, spacial: true
   field :text, type: String
 
+  def as_json
+    {
+      id: id,
+      updated_at: updated_at.to_i,
+      geo: geo,
+      text: text
+    }
+  end
+
 end
 

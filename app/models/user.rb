@@ -36,5 +36,13 @@ class User
     #token_hash = {:oauth_token => user.token,:oauth_token_secret => user.secret}
     access_token = OAuth::AccessToken.new(consumer, user.token, user.secret)
   end
+
+  def as_json
+    {
+      id: id,
+      name: name,
+      updated_at: updated_at.to_i
+    }
+  end
 end
 
