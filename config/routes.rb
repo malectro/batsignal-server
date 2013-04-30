@@ -8,7 +8,7 @@ BatsignalServer::Application.routes.draw do
   match "/twitter_reverse_auth_2" => "sessions#twitter_reverse_auth_2"
   match "/me" => "sessions#current"
 
-  resources :beacons, only: [:index, :show, :create]
+  resources :beacons, only: [:index, :show, :create, :update, :delete]
 
   namespace :admin do
     root to: 'admin#index'
