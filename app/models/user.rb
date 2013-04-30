@@ -37,11 +37,11 @@ class User
     access_token = OAuth::AccessToken.new(consumer, user.token, user.secret)
   end
 
-  def as_json(options)
+  def as_json(options={})
     {
       id: id,
-      name: name,
-      updated_at: updated_at.to_i
+      updated_at: updated_at.to_i,
+      name: name
     }
   end
 end
