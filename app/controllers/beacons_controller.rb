@@ -18,5 +18,15 @@ class BeaconsController < ApplicationController
       render json: @beacon.errors, status: :failed
     end
   end
+
+  def update
+    @beacon = Beacon.realize(params[:id])
+
+    if @beacon.update_attributes(params[:beacon])
+      render json: @beacon, location: @beacon
+    else
+      render json: @beacon.errors, status: :failed
+    end
+  end
 end
 
