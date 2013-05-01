@@ -18,6 +18,5 @@ class Beacon
       user: user.as_json
     }
   end
-
 end
 
