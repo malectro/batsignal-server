@@ -69,8 +69,6 @@ test:
 production:
   sessions:
     default:
-      database: batsignal-server
-      hosts:
-        - localhost:27017
+      uri: <%= ENV['MONGOLAB_URI'] %>
       options:
         consistency: :strong
