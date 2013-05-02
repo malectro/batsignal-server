@@ -8,16 +8,20 @@ class User
   has_many :beacons
 
   # omniauth fields
+  # should move to separate account object
   field :provider, type: String
   field :uid, type: String
   field :name, type: String
   field :token, type: String
   field :secret, type: String
 
+  field :api_token, type: String
+  field :expires, type: DateTime
   field :handle, type: String
   field :email, type: String
 
   validates_uniqueness_of :handle
+  validates_uniqueness_of :api_token
 
   attr_accessible :name, :handle, :email
 
@@ -34,6 +38,9 @@ class User
       else
         user.handle = "user#{user.id}"
       end
+
+      user.api_token = user.id
+      user.expires = DateTime.now
     end
   end
 
@@ -50,6 +57,10 @@ class User
     access_token = OAuth::AccessToken.new(consumer, user.token, user.secret)
   end
 
+  def self.with_access_token(token)
+    user = User.where(api_token: token, expires: {"$gt" => DateTime.now})
+  end
+
   def as_json(options={})
     {
       id: id,
@@ -57,6 +68,30 @@ class User
       name: name,
       handle: handle
     }
+  end
+
+  def authentication_json
+    {
+      id: id,
+      updated_at: updated_at.to_i,
+      name: name,
+      handle: handle,
+      access_token: api_token
+    }
+  end
+
+  def reset_api_token
+    self.api_token = SecureRandom.base64
+    self.expires = DateTime.now + 7.days
+    save
+  end
+
+  def extend_api_token
+    self.expires = DateTime.now + 3.days
+  end
+
+  def invalidate_token
+    update_attribute :expires, DateTime.now
   end
 end
 

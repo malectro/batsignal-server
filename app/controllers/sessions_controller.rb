@@ -9,13 +9,17 @@ class SessionsController < ApplicationController
     user = User.where(provider: auth["provider"], uid: auth["uid"]).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
     respond_to do |format|
-      format.json { render json: current_user }
+      format.json do
+        user.reset_api_token
+        render json: user.authentication_json
+      end
       format.html { redirect_to root_url, flash[:notice] => "Signed in!" }
     end
   end
 
   def destroy
     session[:user_id] = nil
+    current_user.invalidate_token
     respond_to do |format|
       format.json { render json: current_user }
       format.html { redirect_to root_url, flash[:notice] => "Signed out!" }
