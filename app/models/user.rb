@@ -14,6 +14,8 @@ class User
   field :token, type: String
   field :secret, type: String
 
+  field :handle, type: String
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth["provider"]
@@ -21,6 +23,12 @@ class User
       user.name = auth["info"]["name"]
       user.token = auth["credentials"]["token"]
       user.secret = auth["credentials"]["secret"]
+
+      if user.name
+        user.handle = user.name.split(' ')[0] + user.id.to_s
+      else
+        user.handle = "user#{user.id}"
+      end
     end
   end
 
@@ -41,7 +49,8 @@ class User
     {
       id: id,
       updated_at: updated_at.to_i,
-      name: name
+      name: name,
+      handle: handle
     }
   end
 end
