@@ -15,6 +15,11 @@ class User
   field :secret, type: String
 
   field :handle, type: String
+  field :email, type: String
+
+  validates_uniqueness_of :handle
+
+  attr_accessible :name, :handle, :email
 
   def self.create_with_omniauth(auth)
     create! do |user|

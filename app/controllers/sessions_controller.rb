@@ -2,6 +2,8 @@ class SessionsController < ApplicationController
   API_KEY = ENV['TWITTER_API_KEY']
   API_SECRET = ENV['TWITTER_API_SECRET']
 
+  skip_before_filter :require_session
+
   def create
     auth = request.env["omniauth.auth"]
     user = User.where(provider: auth["provider"], uid: auth["uid"]).first || User.create_with_omniauth(auth)

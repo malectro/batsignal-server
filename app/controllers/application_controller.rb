@@ -3,6 +3,16 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  before_filter :require_session
+
+protected
+
+  def require_session
+    if !current_user
+      render json: {error: :session_expired}, status: :forbidden
+    end
+  end
+
 private
 
   def current_user
