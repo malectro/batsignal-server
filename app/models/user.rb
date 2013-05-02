@@ -58,7 +58,9 @@ class User
   end
 
   def self.with_access_token(token)
-    user = User.where(api_token: token, expires: {"$gt" => DateTime.now})
+    puts 'hi'
+    puts token
+    user = User.where(api_token: token, expires: {"$gt" => DateTime.now}).first
   end
 
   def as_json(options={})
@@ -81,7 +83,7 @@ class User
   end
 
   def reset_api_token
-    self.api_token = SecureRandom.base64
+    self.api_token = SecureRandom.urlsafe_base64
     self.expires = DateTime.now + 7.days
     save
   end
