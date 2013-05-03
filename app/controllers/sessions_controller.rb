@@ -6,14 +6,15 @@ class SessionsController < ApplicationController
 
   def create
     auth = request.env["omniauth.auth"]
+    auth["provider"] = 'twitter' if auth["provider"] == 'twitter_reverse'
     user = User.where(provider: auth["provider"], uid: auth["uid"]).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
     respond_to do |format|
+      format.html { redirect_to root_url, flash[:notice] => "Signed in!" }
       format.json do
         user.reset_api_token
         render json: user.authentication_json
       end
-      format.html { redirect_to root_url, flash[:notice] => "Signed in!" }
     end
   end
 

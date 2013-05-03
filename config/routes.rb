@@ -9,7 +9,7 @@ BatsignalServer::Application.routes.draw do
   match "/me" => "sessions#current"
 
   resources :beacons, only: [:index, :show, :create, :update, :delete]
-  resources :users, only: [:update]
+  resources :users, only: [:show, :update]
 
   namespace :admin do
     root to: 'admin#index'
