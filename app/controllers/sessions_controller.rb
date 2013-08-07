@@ -10,7 +10,8 @@ class SessionsController < ApplicationController
     user = User.where(provider: auth["provider"], uid: auth["uid"]).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
     respond_to do |format|
-      format.html { redirect_to root_url, flash[:notice] => "Signed in!" }
+      # twitter doesn't allow for this anymore for some reason. not sure why.
+      # format.html { redirect_to root_url, flash[:notice] => "Signed in!" }
       format.json do
         user.reset_api_token
         render json: user.authentication_json
